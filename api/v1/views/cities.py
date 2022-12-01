@@ -19,7 +19,7 @@ def get_all_cities(state_id):
     """
     cities_list = []
     state = storage.get(State, state_id)
-    if not s_id:
+    if not state:
         abort(404)
     for city in storage.all(City).values():
         if city.state_id == state_id:
