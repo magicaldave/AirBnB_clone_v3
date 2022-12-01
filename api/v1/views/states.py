@@ -10,7 +10,7 @@ from models.state import State
 
 
 @app_views.route("/states/", methods=["GET"],
-                strict_slashes=False)
+                 strict_slashes=False)
 def state_get():
     """
     Retrieves all states
