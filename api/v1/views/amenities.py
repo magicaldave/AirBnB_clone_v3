@@ -5,7 +5,7 @@ Creates an API view for Amenities.
 
 from models.amenity import Amenity
 from models import storage
-from flask import request, abort, make_response
+from flask import request, abort, make_response, jsonify
 from api.v1.views import app_views
 
 
