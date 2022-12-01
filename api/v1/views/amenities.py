@@ -32,18 +32,19 @@ def put_amenity(amenity_id):
     PUTs an amenity (updates it)
     /api/v1/amenities/<amenity_id>
     """
+    amenity = storage.get(Amenity, amenity_id)
     content = request.get_json(silent=True)
     ignored = ['id', 'created_at', 'updated_at']
-    if content is not None:
-        amenity = storage.get(Amenity, amenity_id)
-        if amenity is None:
-            abort(404)
-        for k, v in content.items():
-            if key not in ignored:
-                setattr(amenity, k, v)
-        storage.save()
-        return make_response(jsonify(amenity.to_dict()), 200)
-    return make_response(jsonify({'error': "Not a JSON"}), 400)
+    if amenity is None:
+        abort(404)
+    if content is none:
+        return make_response(jsonify({'error': "Not a JSON"}), 400)
+    for k, v in content.items():
+        if key not in ignored:
+            setattr(amenity, k, v)
+    storage.save()
+    return make_response(jsonify(amenity.to_dict()), 200)
+
 
 
 @app_views.route("/amenities/<amenity_id>", methods=["DELETE"],
