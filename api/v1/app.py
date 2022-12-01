@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 """First-level API module"""
-from os import environ
+
+
+from os import getenv
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from models import storage
 from api.v1.views import app_view
+
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
@@ -28,6 +31,11 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    h = environ.get('HBNB_API_HOST', '0.0.0.0')
-    p = environ.get('HBNB_API_PORT', '5000')
+    h = "0.0.0.0"
+    p = "5000"
+    if getenv("HBNB_API_HOST"):
+        h = getenv('HBNB_API_HOST')
+    if getenv("HBNB_API_HOST"):
+        p = environ.get('HBNB_API_PORT')
+
     app.run(host=h, port=p, threaded=True)
