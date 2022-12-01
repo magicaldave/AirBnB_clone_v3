@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-Creates routes to API objects
-"""
+"""Creates routes to API objects"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
