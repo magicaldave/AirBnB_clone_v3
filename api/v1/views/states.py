@@ -80,15 +80,15 @@ def state_put(state_id):
     Update the state with all keypairs in the dict
     Ignore the id and creation/updated times.
     """
-    request_dict = request.get_json(silent=True)
-    if request_dict is not None:
-        state = storage.get(State, state_id)
-        if state is None:
+    state = storage.get(State, state_id)
+    if state is None:
             abort(404)
-        ignore_keys = ["id", "created_at", "updated_at"]
-        for k, v in request_dict.items():
-            if key not in ignore_keys:
-                setattr(state, key, value)
-        storage.save()
-        return make_response(jsonify(state.to_dict()), 200)
-    return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if request.get_json() is None:
+            return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    content = request.get_json()
+    ignore_keys = ["id", "created_at", "updated_at"]
+    for k, v in content.items():
+        if key not in ignore_keys:
+            setattr(state, key, value)
+    storage.save()
+    return make_response(jsonify(state.to_dict()), 200)
